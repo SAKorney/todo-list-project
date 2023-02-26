@@ -14,12 +14,16 @@ import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
-@Path("/api")
+@Path("/api/v1")
 public class TodoApiResource {
     private final static Logger LOGGER = getLogger(TodoApiResource.class);
 
+    private final TodoService todoService;
+
     @Inject
-    private TodoService todoService;
+    public TodoApiResource(TodoService todoService) {
+        this.todoService = todoService;
+    }
 
     @GET
     @Path("/task")

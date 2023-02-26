@@ -1,5 +1,7 @@
 package ru.hh.todoapp.data;
 
+import ru.hh.todoapp.data.db.TodoTask;
+
 public class Mapper {
     public static TodoTaskDto toDto(TodoTask task) {
         return new TodoTaskDto(task.getId(), task.getDescription(), task.isCompleted());

@@ -3,6 +3,8 @@ package ru.hh.todoapp.service;
 import jakarta.inject.Inject;
 import org.springframework.stereotype.Component;
 import ru.hh.todoapp.data.*;
+import ru.hh.todoapp.data.db.TodoDao;
+import ru.hh.todoapp.data.db.TodoTask;
 
 import java.util.List;
 import java.util.Optional;
