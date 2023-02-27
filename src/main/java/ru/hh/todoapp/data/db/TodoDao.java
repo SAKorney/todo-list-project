@@ -27,13 +27,12 @@ public class TodoDao extends CommonDao {
     }
 
     public List<TodoTask> getByStatus(Status status) {
-        boolean isCompleted = status == Status.COMPLETED;
         return transactionHelper.inTransaction(() ->
                 getSession().createQuery("""
                                  SELECT t FROM TodoTask t
                                  WHERE t.completed = :completed
                                 """, TodoTask.class)
-                        .setParameter("completed", isCompleted)
+                        .setParameter("completed", status.get())
                         .getResultList());
     }
 
