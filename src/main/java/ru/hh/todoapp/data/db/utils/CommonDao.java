@@ -30,9 +30,7 @@ public class CommonDao {
     }
 
     public <T> T get(Class<T> clazz, Serializable id) {
-        return transactionHelper.inTransaction(() -> {
-            return getSession().get(clazz, id);
-        });
+        return transactionHelper.inTransaction(() -> getSession().get(clazz, id));
     }
 
     protected Session getSession() {
