@@ -42,10 +42,10 @@ public class TodoDao extends CommonDao {
     }
 
     public void add(TodoTask task) {
-        save(task);
+        saveEntity(task);
     }
 
     public void update(TodoTask task) {
-        update(task);
+        updateEntity(task);
     }
 }

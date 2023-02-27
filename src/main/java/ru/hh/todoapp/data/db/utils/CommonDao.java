@@ -14,7 +14,7 @@ public class CommonDao {
         this.transactionHelper = transactionHelper;
     }
 
-    public void save(Object object) {
+    public void saveEntity(Object object) {
         if (object == null)  return;
 
         transactionHelper.inTransaction(() -> {
@@ -22,7 +22,7 @@ public class CommonDao {
         });
     }
 
-    public void update(Object object) {
+    public void updateEntity(Object object) {
         if (object == null) return;
         transactionHelper.inTransaction(() -> {
             getSession().update(object);
