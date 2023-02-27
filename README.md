@@ -90,5 +90,3 @@ POST ../api/v1/task
 > curl -X PUT http://localhost:8080/api/v1/task  \
 > -H 'Content-Type: application/json' \
 > -d '{ "id" : 1, "description" : "new description", "completed" : false }'
-
-

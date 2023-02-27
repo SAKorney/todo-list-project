@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.text.MessageFormat;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.List;
@@ -53,7 +54,8 @@ public class TodoService {
 
     public void updateTask(TodoTaskDto task) {
         LOGGER.info("Updated task: [{}]", task);
-        TodoTask entity = Mapper.toEntity(task);
+        Long id = task.getId();
+        TodoTask entity = todoDao.getById(id).orElseThrow();
         todoDao.update(entity);
     }
 }
