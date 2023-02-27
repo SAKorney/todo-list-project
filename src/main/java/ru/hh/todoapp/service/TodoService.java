@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class TodoService {
                 .map(todoDao::getByStatus)
                 .orElseGet(todoDao::getAll)
                 .stream().map(Mapper::toDto)
+                .sorted(Comparator.comparing(TodoTaskDto::getId))
                 .toList();
     }
 
