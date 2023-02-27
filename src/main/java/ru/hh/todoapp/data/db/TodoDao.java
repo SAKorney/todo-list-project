@@ -19,24 +19,22 @@ public class TodoDao extends CommonDao {
     }
 
     public List<TodoTask> getAll() {
-        return transactionHelper.inTransaction(() -> {
-            return getSession().createQuery( """
-                             SELECT t FROM TodoTask t
-                            """, TodoTask.class
-            ).getResultList();
-        });
+        return transactionHelper.inTransaction(() ->
+                getSession().createQuery("""
+                         SELECT t FROM TodoTask t
+                        """, TodoTask.class
+                ).getResultList());
     }
 
     public List<TodoTask> getByStatus(Status status) {
         boolean isCompleted = status == Status.COMPLETED;
-        return transactionHelper.inTransaction(() -> {
-            return getSession().createQuery( """
-                                     SELECT t FROM TodoTask t
-                                     WHERE t.completed = :completed
-                                    """, TodoTask.class)
-                    .setParameter("completed", isCompleted)
-                    .getResultList();
-        });
+        return transactionHelper.inTransaction(() ->
+                getSession().createQuery("""
+                                 SELECT t FROM TodoTask t
+                                 WHERE t.completed = :completed
+                                """, TodoTask.class)
+                        .setParameter("completed", isCompleted)
+                        .getResultList());
     }
 
     public Optional<TodoTask> getById(Long id) {

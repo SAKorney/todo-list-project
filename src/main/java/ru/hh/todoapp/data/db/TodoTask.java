@@ -14,25 +14,21 @@ import java.util.Objects;
 public class TodoTask {
 
     @Id
+    @Getter @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id", nullable = false, unique = true)
-    @Getter
-    @Setter
     private Long id;
 
+    @Getter @Setter
     @Column(name = "task_description")
-    @Getter
-    @Setter
     private String description;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     @Column(name = "task_completed")
     private boolean completed;
 
     @Deprecated
-    public TodoTask() {
-    }
+    public TodoTask() {}
 
     public TodoTask(String description) {
         this(0L, description);

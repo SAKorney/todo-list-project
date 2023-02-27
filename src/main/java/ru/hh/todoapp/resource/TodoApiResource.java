@@ -16,8 +16,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Component
 @Path("/api/v1")
 public class TodoApiResource {
-    private final static Logger LOGGER = getLogger(TodoApiResource.class);
-
     private final TodoService todoService;
 
     @Inject
