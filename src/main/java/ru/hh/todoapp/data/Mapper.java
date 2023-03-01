@@ -7,6 +7,10 @@ public class Mapper {
         return new TodoTaskDto(task.getId(), task.getDescription(), task.isCompleted());
     }
 
+    public static TodoTask toNewEntity(TodoTaskDto taskDto) {
+        return new TodoTask(taskDto.getDescription());
+    }
+
     public static TodoTask toEntity(TodoTaskDto task) {
         return new TodoTask(task.getId(), task.getDescription(), task.isCompleted());
     }
