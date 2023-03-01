@@ -17,15 +17,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-#  todo-app:
-#    build: .
-#    container_name: app
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/hh
-#      - POSTGRES_USER=hh
-#      - POSTGRES_PASSWORD=hh
+  todo-app:
+    build: .
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/hh
+      - POSTGRES_USER=hh
+      - POSTGRES_PASSWORD=hh

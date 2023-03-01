@@ -6,13 +6,11 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.text.MessageFormat;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.List;
 
 import ru.hh.todoapp.data.Mapper;
-import ru.hh.todoapp.data.Status;
 import ru.hh.todoapp.data.TodoTaskDto;
 import ru.hh.todoapp.data.db.TodoDao;
 import ru.hh.todoapp.data.db.TodoTask;
@@ -28,13 +26,12 @@ public class TodoService {
         this.todoDao = todoDao;
     }
 
-    public List<TodoTaskDto> getTasks(Status status) {
+    public List<TodoTaskDto> getTasks(Boolean status) {
         LOGGER.info("Get tasks with status [{}]", status);
-        return Optional.ofNullable(status)
+        return  Optional.ofNullable(status)
                 .map(todoDao::getByStatus)
                 .orElseGet(todoDao::getAll)
                 .stream().map(Mapper::toDto)
-                .sorted(Comparator.comparing(TodoTaskDto::getId))
                 .toList();
     }
 
@@ -42,20 +39,21 @@ public class TodoService {
         LOGGER.info("Get task with id [{}]", id);
         return todoDao.getById(id)
                 .map(Mapper::toDto)
-                .orElse(null);
+                .orElseThrow();
     }
 
-    public void registerTask(TodoTaskDto taskDto) {
+    public TodoTaskDto registerTask(TodoTaskDto taskDto) {
         LOGGER.info("Add new task: [{}]", taskDto);
-        var entity = Mapper.toEntity(taskDto);
+        var entity = Mapper.toNewEntity(taskDto);
         todoDao.add(entity);
-        Mapper.updateDto(taskDto, entity);
+        return Mapper.toDto(entity);
     }
 
     public void updateTask(TodoTaskDto task) {
         LOGGER.info("Updated task: [{}]", task);
         Long id = task.getId();
-        TodoTask entity = todoDao.getById(id).orElseThrow();
+        todoDao.getById(id).orElseThrow();
+        var entity = Mapper.toEntity(task);
         todoDao.update(entity);
     }
 }

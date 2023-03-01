@@ -3,7 +3,6 @@ package ru.hh.todoapp.data.db;
 import jakarta.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
-import ru.hh.todoapp.data.Status;
 import ru.hh.todoapp.data.db.utils.CommonDao;
 import ru.hh.todoapp.data.db.utils.TransactionHelper;
 
@@ -20,19 +19,21 @@ public class TodoDao extends CommonDao {
 
     public List<TodoTask> getAll() {
         return transactionHelper.inTransaction(() ->
-                getSession().createQuery("""
-                         SELECT t FROM TodoTask t
-                        """, TodoTask.class
+                getSession().createQuery(
+                        "SELECT t FROM TodoTask t ORDER BY t.id",
+                        TodoTask.class
                 ).getResultList());
     }
 
-    public List<TodoTask> getByStatus(Status status) {
+    public List<TodoTask> getByStatus(boolean status) {
         return transactionHelper.inTransaction(() ->
                 getSession().createQuery("""
                                  SELECT t FROM TodoTask t
                                  WHERE t.completed = :completed
-                                """, TodoTask.class)
-                        .setParameter("completed", status.get())
+                                 ORDER BY t.id
+                                """,
+                                TodoTask.class)
+                        .setParameter("completed", status)
                         .getResultList());
     }
 
