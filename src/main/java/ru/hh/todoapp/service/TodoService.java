@@ -13,6 +13,7 @@ import ru.hh.todoapp.data.Mapper;
 import ru.hh.todoapp.data.TodoTaskDto;
 import ru.hh.todoapp.data.db.TodoDao;
 import ru.hh.todoapp.data.db.TodoTask;
+import ru.hh.todoapp.utils.exception.NoSuchTaskException;
 
 @Component
 public class TodoService {
@@ -34,11 +35,11 @@ public class TodoService {
                 .toList();
     }
 
-    public TodoTaskDto getSpecificTaskById(Long id) {
+    public TodoTaskDto getSpecificTaskById(Long id) throws NoSuchTaskException {
         LOGGER.info("Get task with id [{}]", id);
         return todoDao.getById(id)
                 .map(Mapper::toDto)
-                .orElseThrow();
+                .orElseThrow(NoSuchTaskException::new);
     }
 
     public TodoTaskDto registerTask(TodoTaskDto taskDto) {
@@ -48,10 +49,10 @@ public class TodoService {
         return Mapper.toDto(entity);
     }
 
-    public void updateTask(TodoTaskDto task) {
+    public void updateTask(TodoTaskDto task) throws NoSuchTaskException {
         LOGGER.info("Updated task: [{}]", task);
         Long id = task.getId();
-        todoDao.getById(id).orElseThrow();
+        todoDao.getById(id).orElseThrow(NoSuchTaskException::new);
         var entity = Mapper.toEntity(task);
         todoDao.update(entity);
     }

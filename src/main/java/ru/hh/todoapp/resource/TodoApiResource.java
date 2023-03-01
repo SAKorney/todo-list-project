@@ -12,12 +12,12 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.springframework.stereotype.Component;
+
 import ru.hh.todoapp.data.TodoTaskDto;
 import ru.hh.todoapp.service.TodoService;
+import ru.hh.todoapp.utils.exception.NoSuchTaskException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Component
 @Path("/api/v1")
@@ -44,7 +44,7 @@ public class TodoApiResource {
             var task = todoService.getSpecificTaskById(id);
             return Response.ok().entity(task).build();
         }
-        catch (NoSuchElementException exception) {
+        catch (NoSuchTaskException exception) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -65,7 +65,7 @@ public class TodoApiResource {
             todoService.updateTask(task);
             return Response.ok().build();
         }
-        catch (NoSuchElementException exception) {
+        catch (NoSuchTaskException exception) {
            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
